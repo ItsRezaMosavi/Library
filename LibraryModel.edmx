@@ -1,0 +1,522 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Library_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblBook">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="BookName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Writer" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="InShelfCount" Type="int" Nullable="false" />
+          <Property Name="OutShelfCount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblBookShelfMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="BookId" />
+            <PropertyRef Name="ShelfId" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookId" Type="int" Nullable="false" />
+          <Property Name="ShelfId" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblEmployee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NationalCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Birth" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FatherName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MotherName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Province" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1500" />
+        </EntityType>
+        <EntityType Name="tblEmployeeAccess">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployId" Type="int" Nullable="false" />
+          <Property Name="BookManagement" Type="bit" Nullable="false" />
+          <Property Name="ShelfManagement" Type="bit" Nullable="false" />
+          <Property Name="EmployManagement" Type="bit" Nullable="false" />
+          <Property Name="MembersManagement" Type="bit" Nullable="false" />
+          <Property Name="EmployAccessManagement" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblMembers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NationalCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Birth" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="JoinDate" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="FatherName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MotherName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Province" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1500" />
+        </EntityType>
+        <EntityType Name="tblShelf">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ShelfNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Capacity" Type="int" Nullable="false" />
+          <Property Name="UsedCapacity" Type="int" Nullable="false" />
+          <Property Name="AvailableCapacity" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Library_DB.dbo.View_Books' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_Books">
+          <Key>
+            <PropertyRef Name="BookId" />
+            <PropertyRef Name="BookName" />
+            <PropertyRef Name="Writer" />
+            <PropertyRef Name="Count" />
+            <PropertyRef Name="InShelfCount" />
+            <PropertyRef Name="OutShelfCount" />
+            <PropertyRef Name="ShelfId" />
+            <PropertyRef Name="Expr1" />
+          </Key>
+          <Property Name="BookId" Type="int" Nullable="false" />
+          <Property Name="BookName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Writer" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="InShelfCount" Type="int" Nullable="false" />
+          <Property Name="OutShelfCount" Type="int" Nullable="false" />
+          <Property Name="ShelfId" Type="int" Nullable="false" />
+          <Property Name="Expr1" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Library_DB.dbo.View_Employee' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_Employee">
+          <Key>
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+            <PropertyRef Name="NationalCode" />
+            <PropertyRef Name="Gender" />
+            <PropertyRef Name="Birth" />
+            <PropertyRef Name="FatherName" />
+            <PropertyRef Name="MotherName" />
+            <PropertyRef Name="PhoneNumber" />
+            <PropertyRef Name="Province" />
+            <PropertyRef Name="City" />
+            <PropertyRef Name="Address" />
+            <PropertyRef Name="BookManagement" />
+            <PropertyRef Name="ShelfManagement" />
+            <PropertyRef Name="EmployManagement" />
+            <PropertyRef Name="MembersManagement" />
+            <PropertyRef Name="EmployAccessManagement" />
+          </Key>
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NationalCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Birth" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FatherName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MotherName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Province" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1500" />
+          <Property Name="BookManagement" Type="bit" Nullable="false" />
+          <Property Name="ShelfManagement" Type="bit" Nullable="false" />
+          <Property Name="EmployManagement" Type="bit" Nullable="false" />
+          <Property Name="MembersManagement" Type="bit" Nullable="false" />
+          <Property Name="EmployAccessManagement" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="Library_DBModelStoreContainer">
+          <EntitySet Name="tblBook" EntityType="Self.tblBook" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBookShelfMapping" EntityType="Self.tblBookShelfMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblEmployee" EntityType="Self.tblEmployee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblEmployeeAccess" EntityType="Self.tblEmployeeAccess" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblMembers" EntityType="Self.tblMembers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblShelf" EntityType="Self.tblShelf" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="View_Books" EntityType="Self.View_Books" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Books].[BookId] AS [BookId], 
+    [View_Books].[BookName] AS [BookName], 
+    [View_Books].[Writer] AS [Writer], 
+    [View_Books].[Count] AS [Count], 
+    [View_Books].[InShelfCount] AS [InShelfCount], 
+    [View_Books].[OutShelfCount] AS [OutShelfCount], 
+    [View_Books].[ShelfId] AS [ShelfId], 
+    [View_Books].[Expr1] AS [Expr1]
+    FROM [dbo].[View_Books] AS [View_Books]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_Employee" EntityType="Self.View_Employee" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Employee].[UserName] AS [UserName], 
+    [View_Employee].[FirstName] AS [FirstName], 
+    [View_Employee].[LastName] AS [LastName], 
+    [View_Employee].[NationalCode] AS [NationalCode], 
+    [View_Employee].[Gender] AS [Gender], 
+    [View_Employee].[Birth] AS [Birth], 
+    [View_Employee].[FatherName] AS [FatherName], 
+    [View_Employee].[MotherName] AS [MotherName], 
+    [View_Employee].[PhoneNumber] AS [PhoneNumber], 
+    [View_Employee].[Email] AS [Email], 
+    [View_Employee].[Province] AS [Province], 
+    [View_Employee].[City] AS [City], 
+    [View_Employee].[Address] AS [Address], 
+    [View_Employee].[Description] AS [Description], 
+    [View_Employee].[BookManagement] AS [BookManagement], 
+    [View_Employee].[ShelfManagement] AS [ShelfManagement], 
+    [View_Employee].[EmployManagement] AS [EmployManagement], 
+    [View_Employee].[MembersManagement] AS [MembersManagement], 
+    [View_Employee].[EmployAccessManagement] AS [EmployAccessManagement]
+    FROM [dbo].[View_Employee] AS [View_Employee]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Library_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Library_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblBooks" EntityType="Library_DBModel.tblBook" />
+          <EntitySet Name="tblBookShelfMappings" EntityType="Library_DBModel.tblBookShelfMapping" />
+          <EntitySet Name="tblEmployees" EntityType="Library_DBModel.tblEmployee" />
+          <EntitySet Name="tblEmployeeAccesses" EntityType="Library_DBModel.tblEmployeeAccess" />
+          <EntitySet Name="tblMembers" EntityType="Library_DBModel.tblMember" />
+          <EntitySet Name="tblShelves" EntityType="Library_DBModel.tblShelf" />
+          <EntitySet Name="View_Books" EntityType="Library_DBModel.View_Books" />
+          <EntitySet Name="View_Employee" EntityType="Library_DBModel.View_Employee" />
+        </EntityContainer>
+        <EntityType Name="tblBook">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="BookName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Writer" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <Property Name="InShelfCount" Type="Int32" Nullable="false" />
+          <Property Name="OutShelfCount" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblBookShelfMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="BookId" />
+            <PropertyRef Name="ShelfId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookId" Type="Int32" Nullable="false" />
+          <Property Name="ShelfId" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblEmployee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NationalCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Birth" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FatherName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MotherName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Province" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblEmployeeAccess">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployId" Type="Int32" Nullable="false" />
+          <Property Name="BookManagement" Type="Boolean" Nullable="false" />
+          <Property Name="ShelfManagement" Type="Boolean" Nullable="false" />
+          <Property Name="EmployManagement" Type="Boolean" Nullable="false" />
+          <Property Name="MembersManagement" Type="Boolean" Nullable="false" />
+          <Property Name="EmployAccessManagement" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblMember">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NationalCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Birth" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="JoinDate" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="FatherName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MotherName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Province" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblShelf">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShelfNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Capacity" Type="Int32" Nullable="false" />
+          <Property Name="UsedCapacity" Type="Int32" Nullable="false" />
+          <Property Name="AvailableCapacity" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="View_Books">
+          <Key>
+            <PropertyRef Name="BookId" />
+            <PropertyRef Name="BookName" />
+            <PropertyRef Name="Writer" />
+            <PropertyRef Name="Count" />
+            <PropertyRef Name="InShelfCount" />
+            <PropertyRef Name="OutShelfCount" />
+            <PropertyRef Name="ShelfId" />
+            <PropertyRef Name="Expr1" />
+          </Key>
+          <Property Name="BookId" Type="Int32" Nullable="false" />
+          <Property Name="BookName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Writer" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <Property Name="InShelfCount" Type="Int32" Nullable="false" />
+          <Property Name="OutShelfCount" Type="Int32" Nullable="false" />
+          <Property Name="ShelfId" Type="Int32" Nullable="false" />
+          <Property Name="Expr1" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="View_Employee">
+          <Key>
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+            <PropertyRef Name="NationalCode" />
+            <PropertyRef Name="Gender" />
+            <PropertyRef Name="Birth" />
+            <PropertyRef Name="FatherName" />
+            <PropertyRef Name="MotherName" />
+            <PropertyRef Name="PhoneNumber" />
+            <PropertyRef Name="Province" />
+            <PropertyRef Name="City" />
+            <PropertyRef Name="Address" />
+            <PropertyRef Name="BookManagement" />
+            <PropertyRef Name="ShelfManagement" />
+            <PropertyRef Name="EmployManagement" />
+            <PropertyRef Name="MembersManagement" />
+            <PropertyRef Name="EmployAccessManagement" />
+          </Key>
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NationalCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Birth" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FatherName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MotherName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Province" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+          <Property Name="BookManagement" Type="Boolean" Nullable="false" />
+          <Property Name="ShelfManagement" Type="Boolean" Nullable="false" />
+          <Property Name="EmployManagement" Type="Boolean" Nullable="false" />
+          <Property Name="MembersManagement" Type="Boolean" Nullable="false" />
+          <Property Name="EmployAccessManagement" Type="Boolean" Nullable="false" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Library_DBModelStoreContainer" CdmEntityContainer="Library_DBEntities">
+          <EntitySetMapping Name="tblBooks">
+            <EntityTypeMapping TypeName="Library_DBModel.tblBook">
+              <MappingFragment StoreEntitySet="tblBook">
+                <ScalarProperty Name="OutShelfCount" ColumnName="OutShelfCount" />
+                <ScalarProperty Name="InShelfCount" ColumnName="InShelfCount" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Writer" ColumnName="Writer" />
+                <ScalarProperty Name="BookName" ColumnName="BookName" />
+                <ScalarProperty Name="BookCode" ColumnName="BookCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBookShelfMappings">
+            <EntityTypeMapping TypeName="Library_DBModel.tblBookShelfMapping">
+              <MappingFragment StoreEntitySet="tblBookShelfMapping">
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="ShelfId" ColumnName="ShelfId" />
+                <ScalarProperty Name="BookId" ColumnName="BookId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblEmployees">
+            <EntityTypeMapping TypeName="Library_DBModel.tblEmployee">
+              <MappingFragment StoreEntitySet="tblEmployee">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="Birth" ColumnName="Birth" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="NationalCode" ColumnName="NationalCode" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblEmployeeAccesses">
+            <EntityTypeMapping TypeName="Library_DBModel.tblEmployeeAccess">
+              <MappingFragment StoreEntitySet="tblEmployeeAccess">
+                <ScalarProperty Name="EmployAccessManagement" ColumnName="EmployAccessManagement" />
+                <ScalarProperty Name="MembersManagement" ColumnName="MembersManagement" />
+                <ScalarProperty Name="EmployManagement" ColumnName="EmployManagement" />
+                <ScalarProperty Name="ShelfManagement" ColumnName="ShelfManagement" />
+                <ScalarProperty Name="BookManagement" ColumnName="BookManagement" />
+                <ScalarProperty Name="EmployId" ColumnName="EmployId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblMembers">
+            <EntityTypeMapping TypeName="Library_DBModel.tblMember">
+              <MappingFragment StoreEntitySet="tblMembers">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
+                <ScalarProperty Name="Birth" ColumnName="Birth" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="NationalCode" ColumnName="NationalCode" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblShelves">
+            <EntityTypeMapping TypeName="Library_DBModel.tblShelf">
+              <MappingFragment StoreEntitySet="tblShelf">
+                <ScalarProperty Name="AvailableCapacity" ColumnName="AvailableCapacity" />
+                <ScalarProperty Name="UsedCapacity" ColumnName="UsedCapacity" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+                <ScalarProperty Name="ShelfNumber" ColumnName="ShelfNumber" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Books">
+            <EntityTypeMapping TypeName="Library_DBModel.View_Books">
+              <MappingFragment StoreEntitySet="View_Books">
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="ShelfId" ColumnName="ShelfId" />
+                <ScalarProperty Name="OutShelfCount" ColumnName="OutShelfCount" />
+                <ScalarProperty Name="InShelfCount" ColumnName="InShelfCount" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Writer" ColumnName="Writer" />
+                <ScalarProperty Name="BookName" ColumnName="BookName" />
+                <ScalarProperty Name="BookId" ColumnName="BookId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Employee">
+            <EntityTypeMapping TypeName="Library_DBModel.View_Employee">
+              <MappingFragment StoreEntitySet="View_Employee">
+                <ScalarProperty Name="EmployAccessManagement" ColumnName="EmployAccessManagement" />
+                <ScalarProperty Name="MembersManagement" ColumnName="MembersManagement" />
+                <ScalarProperty Name="EmployManagement" ColumnName="EmployManagement" />
+                <ScalarProperty Name="ShelfManagement" ColumnName="ShelfManagement" />
+                <ScalarProperty Name="BookManagement" ColumnName="BookManagement" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="Birth" ColumnName="Birth" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="NationalCode" ColumnName="NationalCode" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
